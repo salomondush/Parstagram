@@ -8,9 +8,11 @@
         <entry key="app/src/main/res/drawable/instagram_logo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1025" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35007476806640625" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.17916666666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35394541422526044" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.17916666666666667" />
+        <entry key="app/src/main/res/layout/toolbar_botttom.xml" value="0.40260416666666665" />
         <entry key="app/src/main/res/layout/toolbar_main.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.40260416666666665" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.5743616739908854" />
       </map>
     </option>
