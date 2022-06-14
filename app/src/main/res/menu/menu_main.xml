@@ -6,7 +6,7 @@
         android:id="@+id/camera"
         android:icon="@drawable/camera"
         android:iconTint="@color/black"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="@string/camera">
     </item>
 
@@ -14,6 +14,6 @@
         android:id="@+id/miCompose"
         android:icon="@drawable/nav_inbox_paper_plane"
         app:showAsAction="always"
-        android:title="Compose">
+        android:title="@string/compose">
     </item>
 </menu>

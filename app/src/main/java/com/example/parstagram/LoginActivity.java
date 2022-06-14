@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.parstagram.databinding.ActivityLoginBinding;
@@ -17,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText loginUsername;
     private EditText loginPassword;
+    private TextView loginSignup;
     private Button loginButton;
     ActivityLoginBinding binding;
 
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         loginUsername = binding.loginUsername;
         loginPassword = binding.loginPassword;
         loginButton = binding.loginButton;
+        loginSignup = binding.loginSignup;
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +44,14 @@ public class LoginActivity extends AppCompatActivity {
                 String password = loginPassword.getText().toString();
                 loginUser(username, password);
 
+            }
+        });
+
+        loginSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
             }
         });
     }

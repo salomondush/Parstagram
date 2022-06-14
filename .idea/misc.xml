@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1025" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35007476806640625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35394541422526044" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/toolbar_botttom.xml" value="0.40260416666666665" />
         <entry key="app/src/main/res/layout/toolbar_main.xml" value="0.26197916666666665" />

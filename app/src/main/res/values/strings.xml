@@ -17,4 +17,8 @@
     <string name="camera">Camera</string>
     <string name="home">home</string>
     <string name="addpost">addPost</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_out">Log Out</string>
+    <string name="compose">Compose</string>
 </resources>
