@@ -8,6 +8,7 @@
 
     <include
         layout="@layout/toolbar_main"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -19,27 +20,31 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation_menu" />
 
-    <ImageButton
-        android:id="@+id/cameraButton"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:layout_above="@+id/postImage"
-        android:layout_marginTop="-56dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="22dp"
-        android:layout_toStartOf="@+id/galleryButton"
-        app:srcCompat="@drawable/camera_shadow_fill"
-        app:tint="@color/black" />
+    <!--    <ImageButton-->
+<!--        android:id="@+id/galleryButton"-->
+<!--        android:layout_width="54dp"-->
+<!--        android:layout_height="54dp"-->
+<!--        android:layout_above="@+id/postImage"-->
+<!--        android:layout_below="@+id/toolbar"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginTop="63dp"-->
+<!--        android:layout_marginEnd="17dp"-->
+<!--        android:layout_marginBottom="27dp"-->
+<!--        app:srcCompat="@android:drawable/ic_menu_gallery" />-->
 
     <ImageButton
-        android:id="@+id/galleryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/cameraButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_above="@+id/postImage"
+        android:layout_below="@+id/toolbar"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="26dp"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        android:layout_marginTop="138dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="46dp"
+        android:backgroundTint="@color/white"
+        app:srcCompat="@drawable/camera_shadow_fill"
+        app:tint="@color/black" />
 
     <ImageView
         android:id="@+id/postImage"
@@ -49,7 +54,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginBottom="13dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
@@ -59,7 +64,7 @@
         android:layout_above="@+id/postButton"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="10dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/post_caption"
@@ -72,9 +77,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_navigation"
         android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="194dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="157dp"
+        android:layout_marginBottom="60dp"
         android:backgroundTint="@color/white"
         android:text="Post"
         android:textAllCaps="false"

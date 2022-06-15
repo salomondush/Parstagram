@@ -58,10 +58,12 @@ public class CreatePostActivity extends AppCompatActivity {
 
 
         cameraButton = binding.cameraButton;
-        galleryButton = binding.galleryButton;
+//        galleryButton = binding.galleryButton;
         postImage = binding.postImage;
         postCaption = binding.postCaption;
         postButton = binding.postButton;
+
+        postImage.setImageResource(R.drawable.post_placeholder);
 
         bottomNavigationView = binding.bottomNavigation;
         bottomNavigationView.setOnItemSelectedListener( item -> {

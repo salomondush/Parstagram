@@ -2,6 +2,8 @@ package com.example.parstagram;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +16,16 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
-    BottomNavigationView bottomNavigationView;
+    private ActivityMainBinding binding;
+    private BottomNavigationView bottomNavigationView;
+    private RecyclerView rvPosts;
+    private PostsAdapter adapter;
+    private List<Post> posts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         bottomNavigationView = binding.bottomNavigation;
+        rvPosts = binding.rvPosts;
+
+        // initialize the array that will hold posts and create a PostsAdapter
+        posts = new ArrayList<>();
+        adapter = new PostsAdapter(posts, this);
+
+        rvPosts.setAdapter(adapter);
+        rvPosts.setLayoutManager(new LinearLayoutManager(this));
+
+
         bottomNavigationView.setOnItemSelectedListener( item -> {
             switch (item.getItemId()) {
                 case R.id.userProfile:
@@ -72,15 +88,18 @@ public class MainActivity extends AppCompatActivity {
         // Execute query to fetch all posts from Parse asynchronously,
         query.findInBackground(new FindCallback<Post>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
+            public void done(List<Post> incomingPosts, ParseException e) {
                 if (e != null) {
                     e.printStackTrace();
                     return;
                 }
-                for (Post post : posts) {
+                for (Post post : incomingPosts) {
                     Log.i("Post", post.getDescription());
                 }
 
+                // update the adapter with the new list of posts
+                posts.addAll(incomingPosts);
+                adapter.notifyDataSetChanged();
             }
         });
     }
