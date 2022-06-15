@@ -7,7 +7,10 @@
         <entry key="app/src/main/res/drawable/background_edit_text.xml" value="0.2555" />
         <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.1025" />
         <entry key="app/src/main/res/drawable/home_icon_selector.xml" value="0.142" />
+        <entry key="app/src/main/res/drawable/insta_like.xml" value="0.129" />
+        <entry key="app/src/main/res/drawable/insta_like_border.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/instagram_logo.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/like_button_selector.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/profile_icon_selector.xml" value="0.1765" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1025" />
         <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.33117523193359377" />
@@ -16,7 +19,7 @@
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.17916666666666667" />
-        <entry key="app/src/main/res/layout/item_post.xml" value="0.40260416666666665" />
+        <entry key="app/src/main/res/layout/item_post.xml" value="0.41796875" />
         <entry key="app/src/main/res/layout/toolbar_botttom.xml" value="0.40260416666666665" />
         <entry key="app/src/main/res/layout/toolbar_main.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.40260416666666665" />
@@ -30,5 +33,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.40260416666666665" />
+      </ProjectState>
+    </option>
   </component>
 </project>

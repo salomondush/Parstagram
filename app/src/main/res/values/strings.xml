@@ -24,4 +24,10 @@
     <string name="post_caption">Post Caption</string>
     <string name="post">Post</string>
     <string name="profile">Profile</string>
+    <string name="app_logo">App Logo</string>
+    <string name="logo">logo</string>
+    <string name="time_placeholder">2 hours ago</string>
+    <string name="view_all_comments">View all comments</string>
+    <string name="num_likes_placeholder">10</string>
+    <string name="likes">likes</string>
 </resources>

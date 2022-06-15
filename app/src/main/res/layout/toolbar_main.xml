@@ -2,9 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
+    app:contentInsetStart="5dp"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
     android:layout_alignParentTop="true"
     android:background="@color/white"
     tools:menu="@menu/menu_main"
-    android:minHeight="?attr/actionBarSize" />
+    android:minHeight="?attr/actionBarSize">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/nav_logo_whiteout"/>
+</androidx.appcompat.widget.Toolbar>

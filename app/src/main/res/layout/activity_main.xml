@@ -8,10 +8,17 @@
     tools:context=".MainActivity">
 
     <include
-        layout="@layout/toolbar_main"
         android:id="@+id/toolbar"
+        layout="@layout/toolbar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="#F5F5F5"
+        android:id="@+id/view_background"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -26,9 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_navigation"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/view_background"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
-        android:padding="8dp" />
+        android:layout_marginBottom="0dp"/>
 </RelativeLayout>

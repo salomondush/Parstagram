@@ -41,9 +41,9 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/background_edit_text"
             android:hint="@string/password"
+            android:inputType="textPassword"
             android:padding="12dp"
             android:singleLine="true"
-            android:inputType="textPassword"
             android:textSize="14sp" />
 
         <!-- material button is used to display the "Login" button to user-->
