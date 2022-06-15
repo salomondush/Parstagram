@@ -34,16 +34,13 @@
 
     <ImageButton
         android:id="@+id/cameraButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_above="@+id/postImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="138dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="46dp"
-        android:backgroundTint="@color/white"
-        app:srcCompat="@drawable/camera_shadow_fill"
+        android:layout_marginTop="107dp"
+        android:layout_marginEnd="7dp"
+        android:background="@drawable/camera"
         app:tint="@color/black" />
 
     <ImageView
@@ -51,10 +48,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/postCaption"
+        android:layout_below="@+id/cameraButton"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="10dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
