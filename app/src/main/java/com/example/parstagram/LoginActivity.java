@@ -42,8 +42,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = loginUsername.getText().toString();
                 String password = loginPassword.getText().toString();
-                loginUser(username, password);
 
+                // check if username and password are not empty
+                if (username.isEmpty() || password.isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Username and password are required", Toast.LENGTH_SHORT).show();
+                } else {
+                    loginUser(username, password);
+                }
             }
         });
 
@@ -62,10 +67,10 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseUser user, com.parse.ParseException e) {
                 if (e != null) {
                      Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-                    goToMainActivity();
-                    Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
                 }
+                goToMainActivity();
+                Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

@@ -21,4 +21,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="log_out">Log Out</string>
     <string name="compose">Compose</string>
+    <string name="post_caption">Post Caption</string>
+    <string name="post">Post</string>
+    <string name="profile">Profile</string>
 </resources>

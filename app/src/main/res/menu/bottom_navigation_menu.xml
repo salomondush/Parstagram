@@ -6,19 +6,18 @@
         android:id="@+id/home"
         android:enabled="true"
         app:showAsAction="always"
-        android:icon="@drawable/instagram_home_filled_24"
+        android:icon="@drawable/home_icon_selector"
         android:title="@string/home" />
     <item
         android:id="@+id/addPost"
         android:enabled="true"
-        android:icon="@drawable/instagram_new_post_outline_24"
+        android:icon="@drawable/add_post_icon_selector"
         app:showAsAction="ifRoom"
         android:title="@string/addpost"/>
     <item
         android:id="@+id/userProfile"
         android:enabled="true"
         app:showAsAction="always"
-        app:itemIconTint="@color/black"
-        android:icon="@drawable/instagram_user_outline_24"
-        android:title="@string/home" />
+        android:icon="@drawable/profile_icon_selector"
+        android:title="@string/profile" />
 </menu>

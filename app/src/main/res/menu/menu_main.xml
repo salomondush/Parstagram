@@ -2,18 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/camera"
-        android:icon="@drawable/camera"
-        android:iconTint="@color/black"
-        app:showAsAction="ifRoom"
-        android:title="@string/camera">
-    </item>
-
-    <item
-        android:id="@+id/miCompose"
-        android:icon="@drawable/nav_inbox_paper_plane"
-        app:showAsAction="always"
-        android:title="@string/compose">
-    </item>
 </menu>
