@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,6 +40,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private Button postButton;
     private ImageView postImage;
     private TextView postCaption;
+    MenuItem miActionProgressItem;
 
     private File photoFile;
     private String photoFileName = "photo.jpg";
@@ -123,7 +125,27 @@ public class CreatePostActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
+    }
+
     private void savePost(ParseUser user, String description, File photoFile) {
+        showProgressBar();
         Post post = new Post();
 
         post.setDescription(description);
@@ -141,7 +163,8 @@ public class CreatePostActivity extends AppCompatActivity {
                 }
                 Log.i(TAG, "Post saved successfully");
                 postCaption.setText("");
-                postImage.setImageResource(0);
+                postImage.setImageResource(R.drawable.post_placeholder);
+                hideProgressBar();
             }
         });
     }

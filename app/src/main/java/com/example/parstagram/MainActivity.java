@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // update the adapter with the new list of posts
+                // arrange posts in reverse chronological order
                 posts.addAll(incomingPosts);
                 adapter.notifyDataSetChanged();
             }

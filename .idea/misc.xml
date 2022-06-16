@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/like_button_selector.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/profile_icon_selector.xml" value="0.1765" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1025" />
+        <entry key="app/src/main/res/layout/action_view_progress.xml" value="0.28888888888888886" />
         <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.33117523193359377" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35007476806640625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24278717041015624" />
