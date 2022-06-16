@@ -94,13 +94,12 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
-                for (Post post : incomingPosts) {
-                    Log.i("Post", post.getDescription());
+
+                // arrange posts in chronological order
+                for (int i = incomingPosts.size() - 1; i >= 0; --i) {
+                    posts.add(incomingPosts.get(i));
                 }
 
-                // update the adapter with the new list of posts
-                // arrange posts in reverse chronological order
-                posts.addAll(incomingPosts);
                 adapter.notifyDataSetChanged();
             }
         });
