@@ -28,7 +28,6 @@ import android.widget.Toast;
 
 import com.example.parstagram.Post;
 import com.example.parstagram.R;
-import com.example.parstagram.databinding.ActivityCreatePostBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;

@@ -21,6 +21,13 @@
             android:layout_marginStart="0dp"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="20dp"
+            android:visibility="gone"
+            android:layout_height="20dp"
+            android:indeterminate="true" />
+
         <LinearLayout
             android:id="@+id/buttonBar"
             android:layout_width="match_parent"

@@ -28,10 +28,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.parstagram.LoginActivity;
 import com.example.parstagram.Post;
 import com.example.parstagram.ProfilePostsAdapter;
 import com.example.parstagram.R;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -49,9 +53,10 @@ import java.util.List;
  */
 public class ProfileFragment extends Fragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public static final int PROFILE_RADIUS = 100;
     private File photoFile;
     private String photoFileName = "photo.jpg";
-    private static final String TAG = "ProfileActivity";
+    private static final String TAG = "ProfileFragment";
 
 
 
@@ -63,7 +68,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView rvProfilePosts;
     private List<Post> posts;
     private ProfilePostsAdapter adapter;
-    private MenuItem miActionProgressItem;
+    private CircularProgressIndicator progressIndicator;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -122,6 +127,7 @@ public class ProfileFragment extends Fragment {
         profileImage = view.findViewById(R.id.ivProfileImage);
         uploadProfileButton = view.findViewById(R.id.uploadProfileButton);
         addNewProfileButton = view.findViewById(R.id.addNewProfileButton);
+        progressIndicator = view.findViewById(R.id.progressIndicator);
 
         posts = new ArrayList<>();
         adapter = new ProfilePostsAdapter(posts, getContext());
@@ -168,6 +174,14 @@ public class ProfileFragment extends Fragment {
                 saveProfilePhoto(photoFile);
             }
         });
+
+        if (ParseUser.getCurrentUser().getParseFile("profilePhoto") != null) {
+            Glide.with(requireContext())
+                    .load(ParseUser.getCurrentUser().getParseFile("profilePhoto").getUrl())
+                    .transform(new RoundedCorners(PROFILE_RADIUS))
+                    .into(profileImage);
+        }
+
         queryUserPosts();
     }
 
@@ -211,12 +225,12 @@ public class ProfileFragment extends Fragment {
 
     public void showProgressBar() {
         // Show progress item
-        miActionProgressItem.setVisible(true);
+        progressIndicator.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
         // Hide progress item
-        miActionProgressItem.setVisible(false);
+        progressIndicator.setVisibility(View.GONE);
     }
 
     public void launchCamera(View view) {
