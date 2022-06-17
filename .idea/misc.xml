@@ -16,12 +16,15 @@
         <entry key="app/src/main/res/drawable/profile_image.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1025" />
         <entry key="app/src/main/res/layout/action_view_progress.xml" value="0.28888888888888886" />
-        <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.33117523193359377" />
+        <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35007476806640625" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24278717041015624" />
-        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2357879638671875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.17916666666666667" />
+        <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_timeline.xml" value="0.40920596652560765" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.41796875" />
         <entry key="app/src/main/res/layout/item_profile_post.xml" value="0.1" />
         <entry key="app/src/main/res/layout/toolbar_botttom.xml" value="0.40260416666666665" />

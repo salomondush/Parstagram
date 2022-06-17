@@ -53,7 +53,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         return posts.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         public static final String TAG = "PostsAdapter";
         public static final int TIME_THRESHOLD = 1;
         public static final int PROFILE_RADIUS = 100;

@@ -1,43 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreatePostActivity">
-
-    <include
-        layout="@layout/toolbar_main"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation_menu" />
-
-    <!--    <ImageButton-->
-<!--        android:id="@+id/galleryButton"-->
-<!--        android:layout_width="54dp"-->
-<!--        android:layout_height="54dp"-->
-<!--        android:layout_above="@+id/postImage"-->
-<!--        android:layout_below="@+id/toolbar"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_marginTop="63dp"-->
-<!--        android:layout_marginEnd="17dp"-->
-<!--        android:layout_marginBottom="27dp"-->
-<!--        app:srcCompat="@android:drawable/ic_menu_gallery" />-->
+    android:orientation="vertical"
+    tools:context=".fragments.ComposeFragment">
 
     <ImageButton
         android:id="@+id/cameraButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_alignParentEnd="true"
         android:layout_marginTop="107dp"
         android:layout_marginEnd="7dp"
         android:background="@drawable/camera"
@@ -47,9 +20,6 @@
         android:id="@+id/postImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/postCaption"
-        android:layout_below="@+id/cameraButton"
-        android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="10dp"
@@ -60,7 +30,6 @@
         android:id="@+id/postCaption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/postButton"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
@@ -74,9 +43,6 @@
         android:id="@+id/postButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_navigation"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginEnd="157dp"
         android:layout_marginBottom="60dp"
         android:backgroundTint="@color/white"
@@ -84,4 +50,4 @@
         android:textAllCaps="false"
         android:textColor="@color/instagram_blue" />
 
-</RelativeLayout>
+</LinearLayout>

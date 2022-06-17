@@ -1,48 +1,53 @@
-package com.example.parstagram;
+package com.example.parstagram.fragments;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static android.app.Activity.RESULT_OK;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Outline;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.example.parstagram.databinding.ActivityProfileBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.parstagram.LoginActivity;
+import com.example.parstagram.Post;
+import com.example.parstagram.ProfilePostsAdapter;
+import com.example.parstagram.R;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link ProfileFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class ProfileFragment extends Fragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private File photoFile;
     private String photoFileName = "photo.jpg";
@@ -51,60 +56,97 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     private final int SPAN_COUNT = 3;
-    private ActivityProfileBinding binding;
     private Button logoutButton;
     private Button uploadProfileButton;
     private Button addNewProfileButton;
     private ImageView profileImage;
-    private BottomNavigationView bottomNavigationView;
     private RecyclerView rvProfilePosts;
     private List<Post> posts;
     private ProfilePostsAdapter adapter;
     private MenuItem miActionProgressItem;
 
-    @SuppressLint("NonConstantResourceId")
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public ProfileFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ProfileFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityProfileBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
 
-        logoutButton = binding.logoutButton;
-        bottomNavigationView = binding.bottomNavigation;
-        rvProfilePosts = binding.rvProfilePosts;
-        profileImage = binding.ivProfileImage;
-        uploadProfileButton = binding.uploadProfileButton;
-        addNewProfileButton = binding.addNewProfileButton;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        logoutButton = view.findViewById(R.id.logoutButton);
+        rvProfilePosts = view.findViewById(R.id.rvProfilePosts);
+        profileImage = view.findViewById(R.id.ivProfileImage);
+        uploadProfileButton = view.findViewById(R.id.uploadProfileButton);
+        addNewProfileButton = view.findViewById(R.id.addNewProfileButton);
 
         posts = new ArrayList<>();
-        adapter = new ProfilePostsAdapter(posts, this);
+        adapter = new ProfilePostsAdapter(posts, getContext());
 
         rvProfilePosts.setAdapter(adapter);
-        rvProfilePosts.setLayoutManager(new GridLayoutManager(this, SPAN_COUNT));
+        rvProfilePosts.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
+
 
         logoutButton.setOnClickListener(v -> {
             ParseUser.logOutInBackground(new LogOutCallback() {
-                 @Override
-                 public void done(ParseException e) {
-                        if (e != null) {
-                            Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
-                            Toast.makeText(ProfileActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
-                        }
-                 }
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        // fixme: finish();
+                        Toast.makeText(getContext(), "Logged out", Toast.LENGTH_SHORT).show();
+                    }
+                }
             });
         });
+
 
         addNewProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,38 +162,12 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Create intent for picking a photo from the gallery
                 if (photoFile == null || profileImage.getDrawable() == null) {
-                    Toast.makeText(ProfileActivity.this, "No photo selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "No photo selected", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 saveProfilePhoto(photoFile);
             }
         });
-
-        bottomNavigationView.setOnItemSelectedListener( item -> {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    // set current item as selected
-                    startActivity(new Intent(ProfileActivity.this, MainActivity.class));
-                    // set is checked to true for the selected icon
-                    overridePendingTransition(0, 0);
-                    return true;
-                case R.id.addPost:
-                    startActivity(new Intent(ProfileActivity.this, CreatePostActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-            }
-
-            return true;
-        });
-
-        bottomNavigationView.setSelectedItemId(R.id.userProfile);
-
-
-        Glide.with(this)
-                .load(ParseUser.getCurrentUser().getParseFile("profilePhoto").getUrl())
-                .transform(new RoundedCorners(PostsAdapter.ViewHolder.PROFILE_RADIUS))
-                .into(profileImage);
-
         queryUserPosts();
     }
 
@@ -164,7 +180,7 @@ public class ProfileActivity extends AppCompatActivity {
         query.findInBackground((userPosts, e) -> {
             if (e != null) {
                 e.printStackTrace();
-                Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
 
                 for (int i = 0; i < userPosts.size(); i++) {
@@ -178,23 +194,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // Store instance of the menu item containing progress
-        miActionProgressItem = menu.findItem(R.id.miActionProgress);
-
-        // Return to finish
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     private void saveProfilePhoto(File photoFile) {
         showProgressBar();
         ParseUser user = ParseUser.getCurrentUser();
@@ -202,10 +201,10 @@ public class ProfileActivity extends AppCompatActivity {
         user.saveInBackground(e -> {
             if (e != null) {
                 e.printStackTrace();
-                Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
                 hideProgressBar();
-                Toast.makeText(ProfileActivity.this, "Profile photo saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Profile photo saved", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -229,19 +228,19 @@ public class ProfileActivity extends AppCompatActivity {
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(ProfileActivity.this, "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(requireContext(), "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
         // So as long as the result is not null, it's safe to use the intent.
-        if (intent.resolveActivity(getPackageManager()) != null) {
+        if (intent.resolveActivity(requireContext().getPackageManager()) != null) {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
@@ -259,7 +258,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
             } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -269,7 +268,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Get safe storage directory for photos
         // Use `getExternalFilesDir` on Context to access package-specific directories.
         // This way, we don't need to request external read/write runtime permissions.
-        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+        File mediaStorageDir = new File(requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
