@@ -40,7 +40,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private Button postButton;
     private ImageView postImage;
     private TextView postCaption;
-    MenuItem miActionProgressItem;
+    private MenuItem miActionProgressItem;
 
     private File photoFile;
     private String photoFileName = "photo.jpg";

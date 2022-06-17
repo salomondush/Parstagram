@@ -6,12 +6,14 @@
         <entry key="app/src/main/res/drawable/add_post_icon_selector.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_edit_text.xml" value="0.2555" />
         <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.1025" />
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.157" />
         <entry key="app/src/main/res/drawable/home_icon_selector.xml" value="0.142" />
         <entry key="app/src/main/res/drawable/insta_like.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/insta_like_border.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/instagram_logo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/like_button_selector.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/profile_icon_selector.xml" value="0.1765" />
+        <entry key="app/src/main/res/drawable/profile_image.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1025" />
         <entry key="app/src/main/res/layout/action_view_progress.xml" value="0.28888888888888886" />
         <entry key="app/src/main/res/layout/activity_create_post.xml" value="0.33117523193359377" />

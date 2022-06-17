@@ -11,15 +11,20 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Outline;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -48,11 +53,14 @@ public class ProfileActivity extends AppCompatActivity {
     private final int SPAN_COUNT = 3;
     private ActivityProfileBinding binding;
     private Button logoutButton;
+    private Button uploadProfileButton;
+    private Button addNewProfileButton;
     private ImageView profileImage;
     private BottomNavigationView bottomNavigationView;
     private RecyclerView rvProfilePosts;
     private List<Post> posts;
     private ProfilePostsAdapter adapter;
+    private MenuItem miActionProgressItem;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -72,6 +80,8 @@ public class ProfileActivity extends AppCompatActivity {
         bottomNavigationView = binding.bottomNavigation;
         rvProfilePosts = binding.rvProfilePosts;
         profileImage = binding.ivProfileImage;
+        uploadProfileButton = binding.uploadProfileButton;
+        addNewProfileButton = binding.addNewProfileButton;
 
         posts = new ArrayList<>();
         adapter = new ProfilePostsAdapter(posts, this);
@@ -94,6 +104,27 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                  }
             });
+        });
+
+        addNewProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchCamera(v);
+                addNewProfileButton.setVisibility(View.GONE);
+                uploadProfileButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        uploadProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create intent for picking a photo from the gallery
+                if (photoFile == null || profileImage.getDrawable() == null) {
+                    Toast.makeText(ProfileActivity.this, "No photo selected", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                saveProfilePhoto(photoFile);
+            }
         });
 
         bottomNavigationView.setOnItemSelectedListener( item -> {
@@ -155,8 +186,17 @@ public class ProfileActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     private void saveProfilePhoto(File photoFile) {
-//        showProgressBar();
+        showProgressBar();
         ParseUser user = ParseUser.getCurrentUser();
         user.put("profilePhoto", new ParseFile(photoFile));
         user.saveInBackground(e -> {
@@ -164,11 +204,21 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
+                hideProgressBar();
                 Toast.makeText(ProfileActivity.this, "Profile photo saved", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
+    }
 
     public void launchCamera(View view) {
         // create Intent to take a picture and return control to the calling application
@@ -200,6 +250,14 @@ public class ProfileActivity extends AppCompatActivity {
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 profileImage.setImageBitmap(takenImage);
+                // make profileImage view a circle
+                profileImage.setClipToOutline(true);
+                profileImage.setOutlineProvider(new ViewOutlineProvider() {
+                    @Override
+                    public void getOutline(View view, Outline outline) {
+                        outline.setOval(0, 0, view.getWidth(), view.getHeight());
+                    }
+                });
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }

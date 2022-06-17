@@ -30,4 +30,6 @@
     <string name="view_all_comments">View all comments</string>
     <string name="num_likes_placeholder">10</string>
     <string name="likes">likes</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="new_profile">New Profile</string>
 </resources>
