@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         // Construct query to execute
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER); // include referenced user
+        // only get 20 most recent posts
+        query.setLimit(20);
         // Execute query to fetch all posts from Parse asynchronously,
         query.findInBackground(new FindCallback<Post>() {
             @Override
