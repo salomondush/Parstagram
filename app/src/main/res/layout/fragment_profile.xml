@@ -21,6 +21,22 @@
             android:layout_marginStart="0dp"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <TextView
+            android:id="@+id/profileUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/username"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <View
+            android:background="#F5F5F5"
+            android:id="@+id/view_background"
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressIndicator"
             android:layout_width="20dp"
@@ -79,6 +95,14 @@
                 app:cornerRadius="4dp" />
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/posts"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProfilePosts"

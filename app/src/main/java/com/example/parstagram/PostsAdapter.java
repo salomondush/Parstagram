@@ -7,8 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.parstagram.databinding.ItemPostBinding;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
@@ -24,15 +28,42 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     List<Post> posts;
     Context context;
     ItemPostBinding binding;
+    private OnItemClickListener userClickListener;
+    private OnItemClickListener likeClickListener;
+    private OnItemClickListener commentClickListener;
+
+
+
 
     public PostsAdapter(List<Post> posts, Context context) {
         this.posts = posts;
         this.context = context;
+    }
+
+    // Define the method that allows the parent activity or fragment to define the listener
+    public void setOnUserClickListener(OnItemClickListener listener) {
+        this.userClickListener = listener;
+    }
+
+    // Define the method that allows the parent activity or fragment to define the listener
+    public void setOnLikeClickListener(OnItemClickListener listener) {
+        this.likeClickListener = listener;
+    }
+
+    // Define the method that allows the parent activity or fragment to define the listener
+    public void setOnCommentClickListener(OnItemClickListener listener) {
+        this.commentClickListener = listener;
+    }
+
+    // Define the listener interface
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
     }
 
     @NonNull
@@ -67,8 +98,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         private TextView captionName;
         private TextView createdAt;
         private ImageView ivImage;
+        private ToggleButton likeButton;
+        private ImageButton commentButton;
+
         private ImageView ivProfileImage;
         private TextView tvDescription;
+        private TextView postNumLikes;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -81,6 +116,46 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             ivProfileImage = binding.ivProfileImage;
             createdAt = binding.createdAt;
             ivProfileImage = binding.ivProfileImage;
+            likeButton = binding.likeButton;
+            commentButton = binding.commentButton;
+            postNumLikes = binding.postNumLikes;
+
+
+            likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    likeClickListener.onItemClick(itemView, getAdapterPosition());
+                }
+            });
+
+            commentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    commentClickListener.onItemClick(itemView, getAdapterPosition());
+                }
+            });
+
+            captionName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    userClickListener.onItemClick(itemView, getAdapterPosition());
+                }
+            });
+
+
+            tvUsername.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    userClickListener.onItemClick(itemView, getAdapterPosition());
+                }
+            });
+
+            ivProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    userClickListener.onItemClick(itemView, getAdapterPosition());
+                }
+            });
         }
 
         public void bind(Post post) {
@@ -92,6 +167,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             ParseFile image = post.getImage();
             ParseFile profileImage = post.getUser().getParseFile("profilePhoto");
 
+
+            // get the likedUsers array from the post
+            List<ParseUser> likedUsers = post.getLikedUsers();
+            // check if current user has liked this post
+            // set the like button to checked
+            // set the like button to unchecked
+            for (ParseUser user : likedUsers) {
+                if (Objects.equals(user.getObjectId(), ParseUser.getCurrentUser().getObjectId())) {
+                    likeButton.setChecked(true);
+                }
+            }
+
+            postNumLikes.setText(String.valueOf(post.getLikedUsers().size()));
+
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             } else {
@@ -101,7 +190,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             // load placeholder image for now
             if(profileImage != null) {
                 Glide.with(context).load(profileImage.getUrl())
-                        .transform(new RoundedCorners(PROFILE_RADIUS))
+                        .circleCrop()
                         .into(ivProfileImage);
             } else {
                 Log.i("PostsAdapter", "profileImage is null");

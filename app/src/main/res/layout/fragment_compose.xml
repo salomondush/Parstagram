@@ -13,14 +13,14 @@
         android:layout_height="30dp"
         android:layout_marginTop="107dp"
         android:layout_marginEnd="7dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/camera"
         app:tint="@color/black" />
 
     <ImageView
         android:id="@+id/postImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_height="200dp"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"

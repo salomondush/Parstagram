@@ -8,10 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
+import com.example.parstagram.MainActivity;
 import com.example.parstagram.Post;
 import com.example.parstagram.PostsAdapter;
 import com.example.parstagram.R;
@@ -19,9 +23,11 @@ import com.example.parstagram.databinding.ActivityMainBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,6 +97,48 @@ public class TimelineFragment extends Fragment {
         // initialize the array that will hold posts and create a PostsAdapter
         posts = new ArrayList<>();
         adapter = new PostsAdapter(posts, getContext());
+
+        adapter.setOnUserClickListener(new PostsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                if (position != RecyclerView.NO_POSITION) {
+                    Post post = posts.get(position);
+
+                    // navigate to the user profile
+                    ((MainActivity) requireActivity()).navigateToUserProfile(post.getUser());
+                }
+            }
+        });
+
+        adapter.setOnLikeClickListener(new PostsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                if (position != RecyclerView.NO_POSITION) {
+                    // get the post at position and add user to the list of users who have liked the post
+                    Post post = posts.get(position);
+
+                    boolean isLiked = false;
+                    List<ParseUser> likedUsers = post.getLikedUsers();
+                    for (ParseUser user : likedUsers) {
+                        if (Objects.equals(user.getObjectId(), ParseUser.getCurrentUser().getObjectId())) {
+                            isLiked = true;
+                        }
+                    }
+
+                    // check if user hasn't liked the post before
+                    if (!isLiked) {
+                        // add the user to the list of users who have liked the post
+                        post.addLiker(ParseUser.getCurrentUser());
+                    } else {
+                        // remove the user from the list of users who have liked the post
+                        post.removeLiker(ParseUser.getCurrentUser());
+                    }
+                    post.saveInBackground();
+                    // update the adapter
+                    adapter.notifyItemChanged(position);
+                }
+            }
+        });
 
         rvPosts.setAdapter(adapter);
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));

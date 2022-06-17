@@ -20,12 +20,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     final FragmentManager fragmentManager = getSupportFragmentManager();
+    public static final String USER_ID = "userId";
     private BottomNavigationView bottomNavigationView;
     private ActivityMainBinding binding;
 
@@ -51,8 +53,11 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.userProfile:
-                    // todo: update fragment
                     fragment = new ProfileFragment();
+                    // pass current user ID to profile fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putString(USER_ID, ParseUser.getCurrentUser().getObjectId());
+                    fragment.setArguments(bundle);
                     break;
                 case R.id.addPost:
                     // todo: udpate fragment
@@ -78,4 +83,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void navigateToUserProfile(ParseUser user) {
+        // navigate to the ProfileFragment
+        Fragment fragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(USER_ID, user.getObjectId());
+        fragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
     }
+}

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +47,6 @@ public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView profilePost;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

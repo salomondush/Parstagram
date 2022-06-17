@@ -45,6 +45,7 @@
         android:orientation="horizontal">
 
         <ToggleButton
+            android:id="@+id/likeButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/like_button_selector"
@@ -56,6 +57,7 @@
             android:textOn=""/>
 
         <ImageButton
+            android:id="@+id/commentButton"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/ufi_comment"

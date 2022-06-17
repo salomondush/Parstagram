@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -45,6 +46,7 @@ import com.parse.ParseUser;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,10 +67,13 @@ public class ProfileFragment extends Fragment {
     private Button uploadProfileButton;
     private Button addNewProfileButton;
     private ImageView profileImage;
+    private TextView profileUsername;
     private RecyclerView rvProfilePosts;
     private List<Post> posts;
     private ProfilePostsAdapter adapter;
     private CircularProgressIndicator progressIndicator;
+
+    private ParseUser currentUser;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -128,13 +133,13 @@ public class ProfileFragment extends Fragment {
         uploadProfileButton = view.findViewById(R.id.uploadProfileButton);
         addNewProfileButton = view.findViewById(R.id.addNewProfileButton);
         progressIndicator = view.findViewById(R.id.progressIndicator);
+        profileUsername = view.findViewById(R.id.profileUsername);
 
         posts = new ArrayList<>();
         adapter = new ProfilePostsAdapter(posts, getContext());
 
         rvProfilePosts.setAdapter(adapter);
         rvProfilePosts.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
-
 
         logoutButton.setOnClickListener(v -> {
             ParseUser.logOutInBackground(new LogOutCallback() {
@@ -175,21 +180,54 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        if (ParseUser.getCurrentUser().getParseFile("profilePhoto") != null) {
-            Glide.with(requireContext())
-                    .load(ParseUser.getCurrentUser().getParseFile("profilePhoto").getUrl())
-                    .transform(new RoundedCorners(PROFILE_RADIUS))
-                    .into(profileImage);
-        }
+        getUserProfile();
+    }
 
-        queryUserPosts();
+    private void  getUserProfile() {
+        Bundle args = getArguments();
+        // get userId from args
+        String userId = null;
+        if (args != null) {
+            userId = args.getString("userId");
+
+            // get parse user from userId
+            ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+            query.whereEqualTo("objectId", userId);
+            query.getFirstInBackground((user, e) -> {
+                if (e == null) {
+                    currentUser = user;
+
+                    profileUsername.setText(currentUser.getUsername());
+
+                    if (!Objects.equals(currentUser.getObjectId(), ParseUser.getCurrentUser().getObjectId())) {
+                        logoutButton.setVisibility(View.GONE);
+                        uploadProfileButton.setVisibility(View.GONE);
+                        addNewProfileButton.setVisibility(View.GONE);
+                    }
+
+                    if (currentUser != null && currentUser.getParseFile("profilePhoto") != null) {
+                        Glide.with(requireContext())
+                                .load(currentUser.getParseFile("profilePhoto").getUrl())
+                                .circleCrop()
+                                .into(profileImage);
+
+                        queryUserPosts();
+                    }
+
+                } else {
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "No User", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void queryUserPosts() {
         // Query for all posts by current user
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Post.KEY_USER, currentUser);
         query.orderByDescending(Post.KEY_CREATED_AT);
         query.findInBackground((userPosts, e) -> {
             if (e != null) {
