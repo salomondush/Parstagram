@@ -56,7 +56,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     class ViewHolder extends RecyclerView.ViewHolder{
         public static final String TAG = "PostsAdapter";
         public static final int TIME_THRESHOLD = 1;
-        public static final int PROFILE_RADIUS = 80;
+        public static final int PROFILE_RADIUS = 100;
         private static final int SECOND_MILLIS = 1000;
         private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
         private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
