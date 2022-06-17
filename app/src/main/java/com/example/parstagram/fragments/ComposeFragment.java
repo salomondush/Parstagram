@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.parstagram.Post;
 import com.example.parstagram.R;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -49,7 +50,7 @@ public class ComposeFragment extends Fragment {
     private Button postButton;
     private ImageView postImage;
     private TextView postCaption;
-    private MenuItem miActionProgressItem;
+    private CircularProgressIndicator progressIndicator;
 
     private File photoFile;
     private String photoFileName = "photo.jpg";
@@ -120,6 +121,7 @@ public class ComposeFragment extends Fragment {
         postCaption = view.findViewById(R.id.postCaption);
         postButton = view.findViewById(R.id.postButton);
         postImage.setImageResource(R.drawable.post_placeholder);
+        progressIndicator = view.findViewById(R.id.progressIndicator);
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,12 +154,12 @@ public class ComposeFragment extends Fragment {
 
     public void showProgressBar() {
         // Show progress item
-        miActionProgressItem.setVisible(true);
+        progressIndicator.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
         // Hide progress item
-        miActionProgressItem.setVisible(false);
+        progressIndicator.setVisibility(View.GONE);
     }
 
     private void savePost(ParseUser user, String description, File photoFile) {
