@@ -41,15 +41,17 @@ public class Post extends ParseObject {
         put(KEY_USER, user);
     }
 
-    public void addLiker(ParseUser currentUser) {
-        add(LIKED_USERS, currentUser);
+    public void addLiker(String currentUserId) {
+        add(LIKED_USERS, currentUserId);
     }
 
-    public List<ParseUser> getLikedUsers() {
+    public List<String> getLikedUsers() {
         return getList(LIKED_USERS);
     }
 
-    public void removeLiker(ParseUser currentUser) {
-        removeAll(LIKED_USERS, Collections.singletonList(currentUser));
+    public void removeLiker(String currentUserId) {
+        List<String> likedUsers = getLikedUsers();
+        likedUsers.remove(currentUserId);
+        put(LIKED_USERS, likedUsers);
     }
 }

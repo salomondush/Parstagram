@@ -169,15 +169,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
 
             // get the likedUsers array from the post
-            List<ParseUser> likedUsers = post.getLikedUsers();
+            List<String> likedUsers = post.getLikedUsers();
             // check if current user has liked this post
-            // set the like button to checked
-            // set the like button to unchecked
-            for (ParseUser user : likedUsers) {
-                if (Objects.equals(user.getObjectId(), ParseUser.getCurrentUser().getObjectId())) {
-                    likeButton.setChecked(true);
-                }
-            }
+            // set the button to checked
+            // set the button to unchecked
+            likeButton.setChecked(likedUsers.contains(ParseUser.getCurrentUser().getObjectId()));
 
             postNumLikes.setText(String.valueOf(post.getLikedUsers().size()));
 

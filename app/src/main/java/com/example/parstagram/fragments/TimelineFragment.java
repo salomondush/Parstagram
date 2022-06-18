@@ -118,9 +118,9 @@ public class TimelineFragment extends Fragment {
                     Post post = posts.get(position);
 
                     boolean isLiked = false;
-                    List<ParseUser> likedUsers = post.getLikedUsers();
-                    for (ParseUser user : likedUsers) {
-                        if (Objects.equals(user.getObjectId(), ParseUser.getCurrentUser().getObjectId())) {
+                    List<String> likedUsers = post.getLikedUsers();
+                    for (String userId : likedUsers) {
+                        if (Objects.equals(userId, ParseUser.getCurrentUser().getObjectId())) {
                             isLiked = true;
                         }
                     }
@@ -128,10 +128,10 @@ public class TimelineFragment extends Fragment {
                     // check if user hasn't liked the post before
                     if (!isLiked) {
                         // add the user to the list of users who have liked the post
-                        post.addLiker(ParseUser.getCurrentUser());
+                        post.addLiker(ParseUser.getCurrentUser().getObjectId());
                     } else {
                         // remove the user from the list of users who have liked the post
-                        post.removeLiker(ParseUser.getCurrentUser());
+                        post.removeLiker(ParseUser.getCurrentUser().getObjectId());
                     }
                     post.saveInBackground();
                     // update the adapter
