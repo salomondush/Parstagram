@@ -20,7 +20,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText getSignupPasswordConfirm;
     private Button signupButton;
 
-    ActivitySignupBinding binding;
+    private ActivitySignupBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

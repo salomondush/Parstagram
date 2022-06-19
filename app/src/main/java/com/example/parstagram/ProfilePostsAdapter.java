@@ -17,9 +17,9 @@ import com.example.parstagram.databinding.ItemProfilePostBinding;
 import java.util.List;
 
 public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapter.ViewHolder> {
-    List<Post> posts;
-    Context context;
-    ItemProfilePostBinding binding;
+    private List<Post> posts;
+    private Context context;
+    private ItemProfilePostBinding binding;
 
     public ProfilePostsAdapter(List<Post> posts, Context context) {
         this.posts = posts;

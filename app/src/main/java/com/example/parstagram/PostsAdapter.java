@@ -31,9 +31,9 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
-    List<Post> posts;
-    Context context;
-    ItemPostBinding binding;
+    private List<Post> posts;
+    private Context context;
+    private ItemPostBinding binding;
     private OnItemClickListener userClickListener;
     private OnItemClickListener likeClickListener;
     private OnItemClickListener commentClickListener;
