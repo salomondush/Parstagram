@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.parstagram.EndlessRecyclerViewScrollListener;
 import com.example.parstagram.MainActivity;
 import com.example.parstagram.Post;
 import com.example.parstagram.PostsAdapter;
@@ -39,6 +40,9 @@ public class TimelineFragment extends Fragment {
     private RecyclerView rvPosts;
     private PostsAdapter adapter;
     private List<Post> posts;
+    private static final int REQUEST_LIMIT = 20;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -141,8 +145,51 @@ public class TimelineFragment extends Fragment {
         });
 
         rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvPosts.setLayoutManager(linearLayoutManager);
+
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataFromApi(page);
+            }
+        };
+
+        rvPosts.addOnScrollListener(scrollListener);
         queryPosts();
+    }
+
+    // Append the next page of data into the adapter
+    // This method probably sends out a network request and appends new data items to your adapter.
+    public void loadNextDataFromApi(int offset) {
+        // Send an API request to retrieve appropriate paginated data
+        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
+        //  --> Deserialize and construct new model objects from the API response
+        //  --> Append the new data objects to the existing set of items inside the array of items
+        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(REQUEST_LIMIT);
+        query.setSkip(offset * REQUEST_LIMIT);
+        query.orderByDescending(Post.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                if (e != null) {
+                    Log.e("PostsFragment", "Error with query");
+                    e.printStackTrace();
+                    return;
+                } else {
+                    // append the new data to the adapter
+                    posts.addAll(objects);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void queryPosts() {
@@ -150,7 +197,7 @@ public class TimelineFragment extends Fragment {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER); // include referenced user
         // only get 20 most recent posts
-        query.setLimit(20);
+        query.setLimit(REQUEST_LIMIT);
         // Execute query to fetch all posts from Parse asynchronously,
         query.findInBackground(new FindCallback<Post>() {
             @Override
